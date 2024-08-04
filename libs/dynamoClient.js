@@ -3,8 +3,8 @@ const REGION = "eu-north-1";
 
 const dynamoClient = new DynamoDBClient({
   region: REGION, credentials: {
-    accessKeyId: 'AKIAQKGGXR5RUUX344IS',
-    secretAccessKey: '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'
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECTER_KEY
   }
 });
 
