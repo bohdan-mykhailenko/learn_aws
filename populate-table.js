@@ -1,17 +1,19 @@
 const {
-  BatchWriteItemCommand } = require("aws-sdk/client-dynamodb");
-const { dynamoClient } = require("./libs/dynamoClient");
+  BatchWriteItemCommand
+} = require("@aws-sdk/client-dynamodb");
+const { dynamoClient } = require("./libs/dynamoClient.js");
+
 // Set the parameters.
 const params = {
   RequestItems: {
-    Employees: [
+    Employee: [
       {
         PutRequest: {
           Item: {
-            id: { N: "1" },
+            id: { S: "1" },
             firstName: { S: "Bob" },
-            phone: { N: "155555555555654" },
-            startDate: { S: "2019-12-20" },
+            phone: { N: "155555555555657" },
+            startDate: { S: "2020-6-17" },
           },
         },
       },
@@ -39,9 +41,9 @@ const params = {
   },
 };
 
-export const run = async () => {
+const run = async () => {
   try {
-    const data = await dbclient.send(new BatchWriteItemCommand(params));
+    const data = await dynamoClient.send(new BatchWriteItemCommand(params));
     console.log("Success", data);
   } catch (err) {
     console.log("Error", err);

@@ -2,6 +2,7 @@
 // Load the required clients and commands.
 const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const { SNSClient, PublishCommand } = require("@aws-sdk/client-sns");
+const { dynamoClient } = require("./libs/dynamoClient");
 
 //Set the AWS Region.
 const REGION = "eu-north-1"; //e.g. "us-east-1"
@@ -23,11 +24,10 @@ const params = {
   },
   // Set the projection expression, which the the attributes that you want.
   ProjectionExpression: "firstName, phone",
-  TableName: "TABLE_NAME",
+  TableName: "Employee",
 };
 
 // Create the client service objects.
-const dbclient = new DynamoDBClient({ region: REGION });
 const snsclient = new SNSClient({ region: REGION });
 
 exports.handler = async (event, context, callback) => {
@@ -42,7 +42,7 @@ exports.handler = async (event, context, callback) => {
   }
   try {
     // Scan the table to check identify employees with work anniversary today.
-    const data = await dbclient.send(new ScanCommand(params));
+    const data = await dynamoClient.send(new ScanCommand(params));
     data.Items.forEach(function (element, index, array) {
       const textParams = {
         PhoneNumber: element.phone.N,
@@ -58,3 +58,8 @@ exports.handler = async (event, context, callback) => {
     console.log("Error, could not scan table ", err);
   }
 };
+
+//todo
+//populate table
+//bundle lambda fucntion
+//deploy lambda fucntion

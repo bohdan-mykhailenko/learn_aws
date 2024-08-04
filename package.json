@@ -1,6 +1,16 @@
 {
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.623.0",
-    "@aws-sdk/client-sns": "^3.623.0"
+    "@aws-sdk/client-lambda": "^3.623.0",
+    "@aws-sdk/client-sns": "^3.623.0",
+    "path-browserify": "^1.0.1",
+    "webpack": "^5.93.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "deploy":"node lambda-function-setup.js"
   }
 }
